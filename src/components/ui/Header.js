@@ -73,8 +73,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "25px",
     height: "45px",
     "&:hover": {
-      backgroundColor: theme.palette.secondary.light
-    }
+      backgroundColor: theme.palette.secondary.light,
+    },
   },
   menu: {
     backgroundColor: theme.palette.common.blue,
@@ -191,10 +191,16 @@ export default function Header(props) {
         case `${route.link}`:
           if (props.value !== route.activeIndex) {
             props.setValue(route.activeIndex);
-            if (route.selectedIndex && route.selectedIndex !== props.selectedIndex) {
+            if (
+              route.selectedIndex &&
+              route.selectedIndex !== props.selectedIndex
+            ) {
               props.setSelectedIndex(route.selectedIndex);
             }
           }
+          break;
+          case '/estimate': 
+          props.setValue(5);
           break;
         default:
           break;
@@ -223,7 +229,14 @@ export default function Header(props) {
           />
         ))}
       </Tabs>
-      <Button variant="contained" color="secondary" className={classes.button}>
+      <Button
+        component={Link}
+        to="/estimate"
+        variant="contained"
+        color="secondary"
+        className={classes.button}
+        onClick={() => props.setValue(5)}
+      >
         Free Estimate
       </Button>
       <Menu
@@ -234,7 +247,7 @@ export default function Header(props) {
         classes={{ paper: classes.menu }}
         MenuListProps={{ onMouseLeave: handleClose }}
         elevation={0}
-        style={{zIndex: 1302}}
+        style={{ zIndex: 1302 }}
         keepMounted
       >
         {menuOptions.map((option, i) => (
@@ -290,7 +303,10 @@ export default function Header(props) {
           ))}
 
           <ListItem
-            classes={{ root: classes.drawerItemEstimate, selected: classes.drawerItemSelected }}
+            classes={{
+              root: classes.drawerItemEstimate,
+              selected: classes.drawerItemSelected,
+            }}
             onClick={() => {
               setOpenDrawer(false);
               props.setValue(5);
